@@ -4,6 +4,7 @@
 import hlt.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MyBot {
@@ -32,11 +33,18 @@ public class MyBot {
             final ArrayList<Command> commandQueue = new ArrayList<>();
 
             for (final Ship ship : me.ships.values()) {
-                if (ship.isFull()) {
+//                if(ship.halite > 900){
+//                    ship.setFlag(true);
+//                }
+//                else{
+//
+//                }
+                if (ship.halite > 800) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
-                } else {
-                    if(gameMap.at(ship).halite < Constants.MAX_HALITE / 10){
+                    ship.setFlag(true);
+                }else {
+                    if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10){
                         gameMap.at(ship.position).markUnsafe(ship);
                         commandQueue.add(ship.stayStill());
                     }
@@ -62,6 +70,21 @@ public class MyBot {
                 commandQueue.add(me.shipyard.spawn());
             }
             game.endTurn(commandQueue);
+        }
+    }
+
+    public static void getZone(Game game){
+        if(game.players.size() == 2){
+//            return getZoneForTwo(game.me, game.gameMap);
+        }
+    }
+
+    public static void getZoneForTwo(Player me, GameMap gameMap){
+        if (me.shipyard.position.y > gameMap.height/2){
+            if( me.shipyard.position.x > gameMap.width/2){
+//                int[] position = [134,5354];
+//                return 4;
+            }
         }
     }
 }

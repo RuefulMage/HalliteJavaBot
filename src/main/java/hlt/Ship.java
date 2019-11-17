@@ -2,12 +2,11 @@ package hlt;
 
 public class Ship extends Entity {
     public final int halite;
-
+    public boolean flag = false;
     public Ship(final PlayerId owner, final EntityId id, final Position position, final int halite) {
         super(owner, id, position);
         this.halite = halite;
     }
-
     public boolean isFull() {
         return halite >= Constants.MAX_HALITE;
     }
@@ -24,6 +23,9 @@ public class Ship extends Entity {
         return Command.move(id, Direction.STILL);
     }
 
+    public void setFlag(boolean flag){
+        this.flag = flag;
+    }
     static Ship _generate(final PlayerId playerId) {
         final Input input = Input.readInput();
 
