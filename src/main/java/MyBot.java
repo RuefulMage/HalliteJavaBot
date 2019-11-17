@@ -40,7 +40,7 @@ public class MyBot {
             final ArrayList<Command> commandQueue = new ArrayList<>();
             int counter = 0;
             for (final Ship ship : me.ships.values()) {
-                if (ship.halite > 600) {
+                if (ship.halite > 400) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
                     gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, me.shipyard.position))).markUnsafe(ship);
@@ -86,9 +86,9 @@ public class MyBot {
 //            return getZoneForFour(game.me, game.gameMap);
 //        }
         int x1 = game.gameMap.width - 5;
-        int y1 = game.gameMap.height - 5;
+        int y1 = game.gameMap.height + 5;
         int x2 = game.gameMap.width + 5;
-        int y2 = game.gameMap.height + 5;
+        int y2 = game.gameMap.height - 5;
         return  new Zone(x1,y1,x2,y2);
     }
 
