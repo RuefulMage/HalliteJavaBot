@@ -49,15 +49,9 @@ public class MyBot {
                         commandQueue.add(ship.stayStill());
                     }
                     else{
-                        if(gameMap.at(ship.position.directionalOffset(Direction.NORTH)).isOccupied()){
-                            final int randomDirection = rng.nextInt(4);
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection]))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection])))).markUnsafe(ship);
-                        }
-                        else {
-                            commandQueue.add(ship.move(Direction.NORTH));
-                            gameMap.at(ship.position.directionalOffset(Direction.NORTH)).markUnsafe(ship);
-                        }
+                        final int randomDirection = rng.nextInt(4);
+                        commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection]))));
+                        gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection])))).markUnsafe(ship);
                     }
                 }
             }
