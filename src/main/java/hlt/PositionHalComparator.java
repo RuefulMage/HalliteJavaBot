@@ -3,12 +3,12 @@ package hlt;
 
 import java.util.Comparator;
 
-public class PositionHalComparator<MapCell> implements Comparator<MapCell> {
+public class PositionHalComparator implements Comparator<MapCell> {
 
 
     @Override
-    public int compare(MapCell o1, MapCell o2) {
-        return o1.halite - o2.halite;
+    public int compare(MapCell first, MapCell second) {
+        return first.compareTo(second);
     }
 
     @Override

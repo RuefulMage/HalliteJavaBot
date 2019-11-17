@@ -1,12 +1,12 @@
 package hlt;
 
-public class MapCell {
+public class MapCell implements Comparable{
     public final Position position;
     public int halite;
     public Ship ship;
     public Entity structure;
 
-    public MapCell(final Position position, final int halite) {
+    public MapCell(final Position position, final int halite){
         this.position = position;
         this.halite = halite;
     }
@@ -25,5 +25,10 @@ public class MapCell {
 
     public void markUnsafe(final Ship ship) {
         this.ship = ship;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.halite - ((MapCell) o).halite;
     }
 }
