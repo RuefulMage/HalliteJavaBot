@@ -25,13 +25,13 @@ public class MyBot {
         game.ready("MyJavaBot");
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
         Zone home = getZone(game);
-        Zone [] temp = divideZoneByX(home);
+        /*Zone [] temp = divideZoneByX(home);
         Zone [] temp2 = divideZoneByY(temp[0]);
         Zone [] temp3 = divideZoneByY(temp[1]);
         zones[0] = temp2[0];
         zones[1] = temp2[1];
         zones[2] = temp3[0];
-        zones[3] = temp3[1];
+        zones[3] = temp3[1];*/
         for (;;) {
             game.updateFrame();
             final Player me = game.me;
@@ -73,6 +73,7 @@ public class MyBot {
             {
 
                 commandQueue.add(me.shipyard.spawn());
+                home = getExpansedZone(home, game);
             }
             game.endTurn(commandQueue);
         }
@@ -128,6 +129,15 @@ public class MyBot {
             }
         }
         return max;
+    }
+    public static ArrayList<Position> getListOfPos(GameMap map, Zone zone){
+        ArrayList<Position> pos = new ArrayList<>();
+        for (int i = zone.leftX; i < zone.rightX + 1; i++){
+            for (int j = zone.rightY; j < zone.leftX + 1; j++){
+                pos.add(new Position(i, j));
+            }
+        }
+        return pos;
     }
 
     public static Zone[] divideZoneByX(Zone zone){
