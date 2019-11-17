@@ -4,6 +4,7 @@
 import hlt.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class MyBot {
@@ -20,10 +21,17 @@ public class MyBot {
         // At this point "game" variable is populated with initial map data.
         // This is a good place to do computationally expensive start-up pre-processing.
         // As soon as you call "ready" function below, the 2 second per turn timer will start.
+        Zone [] zones = new Zone[4];
         game.ready("MyJavaBot");
-
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
-
+        Zone home = getZone(game);
+        Zone [] temp = divideZoneByX(home);
+        Zone [] temp2 = divideZoneByX(temp[0]);
+        Zone [] temp3 = divideZoneByX(temp[1]);
+        zones[0] = temp2[0];
+        zones[1] = temp2[1];
+        zones[2] = temp3[0];
+        zones[4] = temp3[1];
         for (;;) {
             game.updateFrame();
             final Player me = game.me;
@@ -42,9 +50,9 @@ public class MyBot {
                     }
                     else{
                         if(gameMap.at(ship.position.directionalOffset(Direction.NORTH)).isOccupied()){
-                            final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
-                            commandQueue.add(ship.move(randomDirection));
-                            gameMap.at(ship.position.directionalOffset(randomDirection)).markUnsafe(ship);
+                            final int randomDirection = rng.nextInt(4);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection]))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection])))).markUnsafe(ship);
                         }
                         else {
                             commandQueue.add(ship.move(Direction.NORTH));
@@ -59,6 +67,7 @@ public class MyBot {
                 !gameMap.at(me.shipyard).isOccupied()
                 && me.ships.size() < 4)
             {
+
                 commandQueue.add(me.shipyard.spawn());
             }
             game.endTurn(commandQueue);
