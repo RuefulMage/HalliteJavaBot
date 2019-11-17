@@ -26,8 +26,8 @@ public class MyBot {
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
         Zone home = getZone(game);
         Zone [] temp = divideZoneByX(home);
-        Zone [] temp2 = divideZoneByX(temp[0]);
-        Zone [] temp3 = divideZoneByX(temp[1]);
+        Zone [] temp2 = divideZoneByY(temp[0]);
+        Zone [] temp3 = divideZoneByY(temp[1]);
         zones[0] = temp2[0];
         zones[1] = temp2[1];
         zones[2] = temp3[0];
@@ -128,10 +128,18 @@ public class MyBot {
     public static Zone[] divideZoneByX(Zone zone){
         int leftX1 = zone.leftX + (zone.rightX / 2);
         int rightX2 = leftX1;
-        Zone zone1 = new Zone(leftX1, zone.leftY, zone.leftX, zone.rightY);
-        Zone zone2 = new Zone(zone.leftX, zone.leftY, rightX2, zone.rightY);
+        Zone zone1 = new Zone(zone.leftX, zone.leftY, leftX1, zone.rightY);
+        Zone zone2 = new Zone(leftX1, zone.leftY, zone.rightX, zone.rightY);
         return new Zone[] {zone1, zone2};
     }
+
+    public static Zone[] divideZoneByY(Zone zone){
+        int newY = zone.leftY/2;
+        Zone zone1 = new Zone(zone.leftX, newY, zone.rightX, zone.rightY);
+        Zone zone2 = new Zone(zone.leftX, zone.leftY, zone.rightX, newY);
+        return new Zone[] {zone1, zone2};
+    }
+
 
     public static Zone getCurrentZone(Ship ship, Zone[] zones){
         for( Zone zone : zones){
@@ -144,7 +152,7 @@ public class MyBot {
 
     public static boolean inZone(Ship ship, Zone zone){
         if( (zone.leftX <= ship.position.x) && (ship.position.x <= zone.rightX)
-                && (zone.leftY <=  ship.position.y) && (ship.position.y <= zone.rightY)){
+                && (zone.leftY >=  ship.position.y) && (ship.position.y >= zone.rightY)){
             return true;
         }
         return false;
