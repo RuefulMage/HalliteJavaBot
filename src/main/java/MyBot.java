@@ -108,4 +108,12 @@ public class MyBot {
             return new Zone(0, gameMap.height, gameMap.width/2, 0);
         }
     }
+
+    public static Zone[] devideZoneByX(Zone zone){
+        int leftX1 = zone.leftX + (zone.rightX / 2);
+        int rightX2 = leftX1;
+        Zone zone1 = new Zone(leftX1, zone.leftY, zone.leftX, zone.rightY);
+        Zone zone2 = new Zone(zone.leftX, zone.leftY, rightX2, zone.rightY);
+        return new Zone[] {zone1, zone2};
+    }
 }
