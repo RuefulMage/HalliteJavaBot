@@ -112,7 +112,7 @@ public class MyBot {
         return max;
     }
 
-    public static Zone[] devideZoneByX(Zone zone){
+    public static Zone[] divideZoneByX(Zone zone){
         int leftX1 = zone.leftX + (zone.rightX / 2);
         int rightX2 = leftX1;
         Zone zone1 = new Zone(leftX1, zone.leftY, zone.leftX, zone.rightY);
