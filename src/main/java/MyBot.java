@@ -42,20 +42,21 @@ public class MyBot {
             for (final Ship ship : me.ships.values()) {
                 if (ship.halite > 600) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
-                    gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, me.shipyard.position))).markUnsafe(ship);
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
+                    gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, me.shipyard.position))).markUnsafe(ship);
 
                 } else {
                     if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10){
-                        gameMap.at(ship.position).markUnsafe(ship);
                         commandQueue.add(ship.stayStill());
+                        gameMap.at(ship.position).markUnsafe(ship);
                     }
                     else{
                         final int randomDirection = rng.nextInt(4);
                         if(ship.position.equals(me.shipyard.position)) {
                             commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
                             gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
-                        }else{
+                        }
+                        else{
                             commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones)))));
                             gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones))))).markUnsafe(ship);
                         }
@@ -134,7 +135,7 @@ public class MyBot {
 
     public static Zone getCurrentZone(Ship ship, Zone[] zones){
         for( Zone zone : zones){
-            if (inZone(ship, zone) == true) {
+            if (inZone(ship, zone)) {
                 return zone;
             }
         }
@@ -142,7 +143,7 @@ public class MyBot {
     }
 
     public static boolean inZone(Ship ship, Zone zone){
-        if( (zone.leftX < ship.position.x) && (ship.position.x < zone.rightX)
+        if( (zone.leftX <= ship.position.x) && (ship.position.x <= zone.rightX)
                 &&( ((zone.leftY - ship.position.y)*(ship.position.y - zone.rightY)) < 0 )){
             return true;
         }
