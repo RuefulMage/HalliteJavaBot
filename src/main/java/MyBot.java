@@ -69,7 +69,7 @@ public class MyBot {
                 //game.turnNumber <= 200 &&
                 me.halite >= Constants.SHIP_COST &&
                 !gameMap.at(me.shipyard).isOccupied()
-                && me.ships.size() < 4)
+                && me.ships.size() < home.area / 8)
             {
 
                 commandQueue.add(me.shipyard.spawn());
@@ -182,4 +182,5 @@ public class MyBot {
         }
         return  new Zone(zone.leftX - 2, zone.leftY + 2, zone.rightX + 2, zone.rightY - 2);
     }
+
 }
