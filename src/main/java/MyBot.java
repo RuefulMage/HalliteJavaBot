@@ -57,8 +57,8 @@ public class MyBot {
                             gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
                         }
                         else{
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones)))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones))))).markUnsafe(ship);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
                         }
 
                     }
