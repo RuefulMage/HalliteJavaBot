@@ -85,10 +85,10 @@ public class MyBot {
 //        else{
 //            return getZoneForFour(game.me, game.gameMap);
 //        }
-        int x1 = game.gameMap.width - 5;
-        int y1 = game.gameMap.height + 5;
-        int x2 = game.gameMap.width + 5;
-        int y2 = game.gameMap.height - 5;
+        int x1 = game.me.shipyard.position.x - 5;
+        int y1 = game.me.shipyard.position.y + 5;
+        int x2 = game.me.shipyard.position.x + 5;
+        int y2 = game.me.shipyard.position.y - 5;
         return  new Zone(x1,y1,x2,y2);
     }
 
