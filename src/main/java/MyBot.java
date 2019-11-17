@@ -42,7 +42,9 @@ public class MyBot {
             for (final Ship ship : me.ships.values()) {
                 if (ship.halite > 600) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
+                    gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, me.shipyard.position)));
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
+
                 } else {
                     if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10){
                         gameMap.at(ship.position).markUnsafe(ship);
