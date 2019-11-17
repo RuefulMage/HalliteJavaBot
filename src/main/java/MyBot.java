@@ -40,7 +40,7 @@ public class MyBot {
             final ArrayList<Command> commandQueue = new ArrayList<>();
 
             for (final Ship ship : me.ships.values()) {
-                if (ship.halite > 700) {
+                if (ship.isFull()) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
                 } else {
@@ -123,4 +123,20 @@ public class MyBot {
         return new Zone[] {zone1, zone2};
     }
 
+    public static Zone getCurrentZone(Ship ship, Zone[] zones){
+        for( Zone zone : zones){
+            if (inZone(ship, zone) == true) {
+                return zone;
+            }
+        }
+        return null;
+    }
+
+    public static boolean inZone(Ship ship, Zone zone){
+        if( (zone.leftX < ship.position.x) && (ship.position.x < zone.rightX)
+                &&( ((zone.leftY - ship.position.y)*(ship.position.y - zone.rightY)) < 0 )){
+            return true;
+        }
+        return false;
+    }
 }

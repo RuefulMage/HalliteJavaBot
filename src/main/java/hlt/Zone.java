@@ -1,6 +1,9 @@
 package hlt;
 
-public class Zone {
+
+import java.awt.*;
+
+public class Zone{
     public int leftX;
     public int leftY;
     public int rightX;
