@@ -1,9 +1,16 @@
 package hlt;
 
 public class Zone {
-    public int centerX;
-    public int centerY;
-    public int cornerX;
-    public int cornerY;
+    public int leftX;
+    public int leftY;
+    public int rightX;
+    public int rightY;
+
+    public Zone(int leftX, int leftY, int rightX, int rightY){
+        this.leftX = leftX;
+        this.leftY = leftY;
+        this.rightX = rightX;
+        this.rightY = rightY;
+    }
 
 }

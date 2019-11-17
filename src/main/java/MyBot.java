@@ -73,18 +73,37 @@ public class MyBot {
         }
     }
 
-    public static void getZone(Game game){
+    public static Zone getZone(Game game){
         if(game.players.size() == 2){
-//            return getZoneForTwo(game.me, game.gameMap);
+            return getZoneForTwo(game.me, game.gameMap);
         }
     }
 
-    public static void getZoneForTwo(Player me, GameMap gameMap){
-        if (me.shipyard.position.y > gameMap.height/2){
-            if( me.shipyard.position.x > gameMap.width/2){
-//                int[] position = [134,5354];
-//                return 4;
+    public static Zone getZoneForFour(Player me, GameMap gameMap){
+        if (me.shipyard.position.x > gameMap.width/2){
+            if(me.shipyard.position.y < gameMap.height/2){
+                return new Zone(gameMap.width/2, gameMap.height/2, gameMap.width, 0);
             }
+            else{
+                return new Zone(gameMap.width/2, gameMap.height, gameMap.width, gameMap.height/2);
+            }
+        }
+        else{
+            if(me.shipyard.position.y < gameMap.height/2){
+                return new Zone(0, gameMap.height/2, gameMap.width/2, 0);
+            }
+            else{
+                return new Zone(0, gameMap.height, gameMap.width/2, gameMap.height/2);
+            }
+        }
+    }
+
+    public static Zone getZoneForTwo(Player me, GameMap gameMap){
+        if( me.shipyard.position.x > gameMap.width/2 ){
+            return new Zone(gameMap.width/2, gameMap.height, gameMap.width, 0);
+        }
+        else{
+            return new Zone(0, gameMap.height, gameMap.width/2, 0);
         }
     }
 }
