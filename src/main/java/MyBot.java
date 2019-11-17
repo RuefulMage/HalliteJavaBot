@@ -63,7 +63,7 @@ public class MyBot {
 
                     }
                 }
-            counter += 1;
+                counter ++;
             }
             if (
                 //game.turnNumber <= 200 &&
@@ -78,12 +78,17 @@ public class MyBot {
         }
     }
     public static Zone getZone(Game game){
-        if(game.players.size() == 2){
-            return getZoneForTwo(game.me, game.gameMap);
-        }
-        else{
-            return getZoneForFour(game.me, game.gameMap);
-        }
+//        if(game.players.size() == 2){
+//            return getZoneForTwo(game.me, game.gameMap);
+//        }
+//        else{
+//            return getZoneForFour(game.me, game.gameMap);
+//        }
+        int x1 = game.gameMap.width - 5;
+        int y1 = game.gameMap.height - 5;
+        int x2 = game.gameMap.width + 5;
+        int y2 = game.gameMap.height + 5;
+        return  new Zone(x1,y1,x2,y2);
     }
 
     public static Zone getZoneForFour(Player me, GameMap gameMap){
