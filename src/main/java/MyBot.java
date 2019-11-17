@@ -31,7 +31,7 @@ public class MyBot {
         zones[0] = temp2[0];
         zones[1] = temp2[1];
         zones[2] = temp3[0];
-        zones[4] = temp3[1];
+        zones[3] = temp3[1];
         for (;;) {
             game.updateFrame();
             final Player me = game.me;
@@ -44,7 +44,7 @@ public class MyBot {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
                     commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
                 } else {
-                    if(gameMap.at(ship).halite < Constants.MAX_HALITE / 10){
+                    if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10){
                         gameMap.at(ship.position).markUnsafe(ship);
                         commandQueue.add(ship.stayStill());
                     }
