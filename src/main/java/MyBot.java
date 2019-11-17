@@ -53,12 +53,12 @@ public class MyBot {
                     else{
                         final int randomDirection = rng.nextInt(4);
                         if(ship.position.equals(me.shipyard.position)) {
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
                         }
                         else{
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
                         }
 
                     }
