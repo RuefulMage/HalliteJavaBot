@@ -72,10 +72,12 @@ public class MyBot {
             game.endTurn(commandQueue);
         }
     }
-
     public static Zone getZone(Game game){
         if(game.players.size() == 2){
             return getZoneForTwo(game.me, game.gameMap);
+        }
+        else{
+            return getZoneForFour(game.me, game.gameMap);
         }
     }
 
