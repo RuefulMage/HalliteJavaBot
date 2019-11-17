@@ -32,22 +32,35 @@ public class MyBot {
             final ArrayList<Command> commandQueue = new ArrayList<>();
 
             for (final Ship ship : me.ships.values()) {
-                if (gameMap.at(ship).halite < Constants.MAX_HALITE / 10 || ship.isFull()) {
-                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
-                    commandQueue.add(ship.move(randomDirection));
+                if (ship.isFull()) {
+//                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
+                    commandQueue.add(ship.move(gameMap.naiveNavigate(ship, me.shipyard.position)));
                 } else {
-                    commandQueue.add(ship.stayStill());
+                    if(gameMap.at(ship).halite < Constants.MAX_HALITE / 10){
+                        gameMap.at(ship.position).markUnsafe(ship);
+                        commandQueue.add(ship.stayStill());
+                    }
+                    else{
+                        if(gameMap.at(ship.position.directionalOffset(Direction.NORTH)).isOccupied()){
+                            final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
+                            commandQueue.add(ship.move(randomDirection));
+                            gameMap.at(ship.position.directionalOffset(randomDirection)).markUnsafe(ship);
+                        }
+                        else {
+                            commandQueue.add(ship.move(Direction.NORTH));
+                            gameMap.at(ship.position.directionalOffset(Direction.NORTH)).markUnsafe(ship);
+                        }
+                    }
                 }
             }
-            Log.log("Players:" + game.players.size());
             if (
-                game.turnNumber <= 200 &&
+                //game.turnNumber <= 200 &&
                 me.halite >= Constants.SHIP_COST &&
-                !gameMap.at(me.shipyard).isOccupied())
+                !gameMap.at(me.shipyard).isOccupied()
+                && me.ships.size() < 4)
             {
                 commandQueue.add(me.shipyard.spawn());
             }
-
             game.endTurn(commandQueue);
         }
     }
