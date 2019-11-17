@@ -38,7 +38,7 @@ public class MyBot {
             final GameMap gameMap = game.gameMap;
 
             final ArrayList<Command> commandQueue = new ArrayList<>();
-
+            int counter = 0;
             for (final Ship ship : me.ships.values()) {
                 if (ship.halite > 600) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
@@ -53,13 +53,16 @@ public class MyBot {
                     else{
                         final int randomDirection = rng.nextInt(4);
                         if(ship.position.equals(me.shipyard.position)) {
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection]))));
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
                         }else{
                             commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones)))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, getCurrentZone(ship, zones))))).markUnsafe(ship);
                         }
-                        gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[randomDirection])))).markUnsafe(ship);
+
                     }
                 }
+            counter += 1;
             }
             if (
                 //game.turnNumber <= 200 &&
