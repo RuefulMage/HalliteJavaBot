@@ -39,6 +39,8 @@ public class MyBot {
 
             final ArrayList<Command> commandQueue = new ArrayList<>();
             int counter = 0;
+            ArrayList<MapCell> cells = getListOfCells(gameMap, home);
+            cells.sort(new PositionHalComparator<>());
             for (final Ship ship : me.ships.values()) {
                 if (ship.halite > 400) {
 //                    final Direction randomDirection = Direction.ALL_CARDINALS.get(rng.nextInt(4));
@@ -46,21 +48,15 @@ public class MyBot {
                     gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, me.shipyard.position))).markUnsafe(ship);
 
                 } else {
-                    if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10){
+                    if(gameMap.at(ship).halite > Constants.MAX_HALITE / 10 && ship.halite < 100){
                         commandQueue.add(ship.stayStill());
                         gameMap.at(ship.position).markUnsafe(ship);
                     }
                     else{
                         final int randomDirection = rng.nextInt(4);
-                        if(ship.position.equals(me.shipyard.position)) {
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
-                        }
-                        else{
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
-                        }
-
+                        Position pos = cells.get(cells.size() - 1 - counter).position;
+                        commandQueue.add(ship.move(gameMap.naiveNavigate(ship, pos)));
+                        gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, pos))).markUnsafe(ship);
                     }
                 }
                 counter ++;
@@ -130,14 +126,14 @@ public class MyBot {
         }
         return max;
     }
-    public static ArrayList<Position> getListOfPos(GameMap map, Zone zone){
-        ArrayList<Position> pos = new ArrayList<>();
+    public static ArrayList<MapCell> getListOfCells(GameMap map, Zone zone){
+        ArrayList<MapCell> cells = new ArrayList<>();
         for (int i = zone.leftX; i < zone.rightX + 1; i++){
             for (int j = zone.rightY; j < zone.leftX + 1; j++){
-                pos.add(new Position(i, j));
+                cells.add(map.at(new Position(i, j)));
             }
         }
-        return pos;
+        return cells;
     }
 
     public static Zone[] divideZoneByX(Zone zone){
