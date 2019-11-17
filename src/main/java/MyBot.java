@@ -25,13 +25,13 @@ public class MyBot {
         game.ready("MyJavaBot");
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
         Zone home = getZone(game);
-        /*Zone [] temp = divideZoneByX(home);
+        Zone [] temp = divideZoneByX(home);
         Zone [] temp2 = divideZoneByY(temp[0]);
         Zone [] temp3 = divideZoneByY(temp[1]);
         zones[0] = temp2[0];
         zones[1] = temp2[1];
         zones[2] = temp3[0];
-        zones[3] = temp3[1];*/
+        zones[3] = temp3[1];
         for (;;) {
             game.updateFrame();
             final Player me = game.me;
@@ -53,12 +53,12 @@ public class MyBot {
                     else{
                         final int randomDirection = rng.nextInt(4);
                         if(ship.position.equals(me.shipyard.position)) {
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
                         }
                         else{
-                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home))));
-                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, home)))).markUnsafe(ship);
+                            commandQueue.add(ship.move(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter]))));
+                            gameMap.at(ship.position.directionalOffset(gameMap.naiveNavigate(ship, getMaxInZone(gameMap, zones[counter])))).markUnsafe(ship);
                         }
 
                     }
@@ -69,7 +69,7 @@ public class MyBot {
                 //game.turnNumber <= 200 &&
                 me.halite >= Constants.SHIP_COST &&
                 !gameMap.at(me.shipyard).isOccupied()
-                && me.ships.size() < home.area / 4)
+                && me.ships.size() < 4)
             {
 
                 commandQueue.add(me.shipyard.spawn());
@@ -161,5 +161,15 @@ public class MyBot {
             return true;
         }
         return false;
+    }
+
+
+    public static Zone getExpansedZone(Zone zone, Game game){
+        if((zone.rightY - 2 < game.gameMap.height) || (zone.leftY + 2 > game.gameMap.height)
+                || (zone.rightX + 2> game.gameMap.width) || (zone.leftX - 2< 0)){
+            Log.log("zone is too large");
+            return zone;
+        }
+        return  new Zone(zone.leftX - 2, zone.leftY + 2, zone.rightX + 2, zone.rightY - 2);
     }
 }
