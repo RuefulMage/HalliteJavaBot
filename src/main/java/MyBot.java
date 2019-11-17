@@ -144,7 +144,7 @@ public class MyBot {
 
     public static boolean inZone(Ship ship, Zone zone){
         if( (zone.leftX <= ship.position.x) && (ship.position.x <= zone.rightX)
-                &&( ((zone.leftY - ship.position.y)*(ship.position.y - zone.rightY)) < 0 )){
+                && (zone.leftY <=  ship.position.y) && (ship.position.y <= zone.rightY)){
             return true;
         }
         return false;
