@@ -11,6 +11,10 @@ public class MapCell implements Comparable{
         this.halite = halite;
     }
 
+    public int getHalite(){
+        return this.halite;
+    }
+
     public boolean isEmpty() {
         return ship == null && structure == null;
     }
