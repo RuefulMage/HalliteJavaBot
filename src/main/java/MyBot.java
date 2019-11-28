@@ -25,7 +25,8 @@ public class MyBot {
         Zone [] zones = new Zone[4];
         game.ready("MyJavaBot");
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
-        Zone home = getZone(game);
+//        Zone home = getZone(game);
+        System.out.println(makeSuperMerge());
         /*Zone [] temp = divideZoneByX(home);
         Zone [] temp2 = divideZoneByY(temp[0]);
         Zone [] temp3 = divideZoneByY(temp[1]);
@@ -75,109 +76,10 @@ public class MyBot {
 //            game.endTurn(commandQueue);
 //        }
     }
-    public static Zone getZone(Game game){
-//        if(game.players.size() == 2){
-//            return getZoneForTwo(game.me, game.gameMap);
-//        }
-//        else{
-//            return getZoneForFour(game.me, game.gameMap);
-//        }
-        int x1 = game.me.shipyard.position.x - 5;
-        int y1 = game.me.shipyard.position.y + 5;
-        int x2 = game.me.shipyard.position.x + 5;
-        int y2 = game.me.shipyard.position.y - 5;
-        return new Zone(x1,y1,x2,y2);
-    }
-
-    public static Zone getZoneForFour(Player me, GameMap gameMap){
-        if (me.shipyard.position.x > gameMap.width/2){
-            if(me.shipyard.position.y < gameMap.height/2){
-                return new Zone(gameMap.width/2, gameMap.height/2, gameMap.width, 0);
-            }
-            else{
-                return new Zone(gameMap.width/2, gameMap.height, gameMap.width, gameMap.height/2);
-            }
-        }
-        else{
-            if(me.shipyard.position.y < gameMap.height/2){
-                return new Zone(0, gameMap.height/2, gameMap.width/2, 0);
-            }
-            else{
-                return new Zone(0, gameMap.height, gameMap.width/2, gameMap.height/2);
-            }
-        }
-    }
-
-    public static Zone getZoneForTwo(Player me, GameMap gameMap){
-        if( me.shipyard.position.x > gameMap.width/2 ){
-            return new Zone(gameMap.width/2, gameMap.height, gameMap.width, 0);
-        }
-        else{
-            return new Zone(0, gameMap.height, gameMap.width/2, 0);
-        }
-    }
-    public static Position getMaxInZone(GameMap map, Zone zone){
-        Position max = new Position(zone.leftX, zone.leftY);
-        for (int i = zone.leftX; i < zone.rightX + 1; i++){
-            for (int j = zone.rightY; j < zone.leftX + 1; j++){
-                if ((map.at(new Position(i, j)).halite > map.at(max).halite)){
-                    max = new Position(i, j);
-                }
-            }
-        }
-        return max;
-    }
-    public static ArrayList<MapCell> getListOfCells(GameMap map, Zone zone){
-        ArrayList<MapCell> cells = new ArrayList<>();
-        for (int i = zone.leftX; i < zone.rightX + 1; i++){
-            for (int j = zone.rightY; j < zone.leftX + 1; j++){
-                cells.add(map.at(new Position(i, j)));
-            }
-        }
-        return cells;
-    }
-
-    public static Zone[] divideZoneByX(Zone zone){
-        int leftX1 = zone.leftX + (zone.rightX / 2);
-        int rightX2 = leftX1;
-        Zone zone1 = new Zone(zone.leftX, zone.leftY, leftX1, zone.rightY);
-        Zone zone2 = new Zone(leftX1, zone.leftY, zone.rightX, zone.rightY);
-        return new Zone[] {zone1, zone2};
-    }
-
-    public static Zone[] divideZoneByY(Zone zone){
-        int newY = zone.leftY/2;
-        Zone zone1 = new Zone(zone.leftX, newY, zone.rightX, zone.rightY);
-        Zone zone2 = new Zone(zone.leftX, zone.leftY, zone.rightX, newY);
-        return new Zone[] {zone1, zone2};
-    }
-
-
-    public static Zone getCurrentZone(Ship ship, Zone[] zones){
-        for( Zone zone : zones){
-            if (inZone(ship, zone)) {
-                return zone;
-            }
-        }
-        return null;
-    }
-
-    public static boolean inZone(Ship ship, Zone zone){
-        if( (zone.leftX <= ship.position.x) && (ship.position.x <= zone.rightX)
-                && (zone.leftY >=  ship.position.y) && (ship.position.y >= zone.rightY)){
-            return true;
-        }
-        return false;
-    }
-
-
-    public static Zone getExpansedZone(Zone zone, Game game){
-        if((zone.rightY - 2 < game.gameMap.height) || (zone.leftY + 2 > game.gameMap.height)
-                || (zone.rightX + 2> game.gameMap.width) || (zone.leftX - 2< 0)){
-            Log.log("zone is too large");
-            return zone;
-        }
-        return  new Zone(zone.leftX - 2, zone.leftY + 2, zone.rightX + 2, zone.rightY - 2);
+    public static String makeSuperMerge(){
+        String greatString = "SUPERMERGE";
+        String epicEndOfLine = "!!!!!!!!!!!!!!!!!!!!!";
+        return greatString.concat(epicEndOfLine);
     }
 
 }
