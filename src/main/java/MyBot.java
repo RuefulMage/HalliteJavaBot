@@ -27,6 +27,10 @@ public class MyBot {
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
 //        Zone home = getZone(game);
         System.out.println(makeSuperMerge());
+        System.out.println("Hello world");
+        System.out.println("jkljlsjdlksjdkjkldjsk");
+        System.out.println("xlkldksjdlksjdklsjdlk");
+        System.out.println("lkdsdkjskldskldjskldjskldjslk");
         /*Zone [] temp = divideZoneByX(home);
         Zone [] temp2 = divideZoneByY(temp[0]);
         Zone [] temp3 = divideZoneByY(temp[1]);
@@ -81,5 +85,6 @@ public class MyBot {
         String epicEndOfLine = "!!!!!!!!!!!!!!!!!!!!!";
         return greatString.concat(epicEndOfLine);
     }
+
 
 }
