@@ -27,6 +27,9 @@ public class MyBot {
         Log.log("Successfully created bot! My Player ID is " + game.myId + ". Bot rng seed is " + rngSeed + ".");
 //        Zone home = getZone(game);
         System.out.println(makeSuperMerge());
+        System.out.println("first");
+        System.out.println("second");
+        System.out.println("third");
         /*Zone [] temp = divideZoneByX(home);
         Zone [] temp2 = divideZoneByY(temp[0]);
         Zone [] temp3 = divideZoneByY(temp[1]);
